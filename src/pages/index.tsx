@@ -1,4 +1,3 @@
-// index.tsx
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import MainContainer from '../components/MainContainer';
 
@@ -10,6 +9,39 @@ interface Product {
   tags: string[];
 }
 
+/**
+ * Represents a clone of the Amazon Marketplace, specifically for books.
+ *
+ * This component is responsible for fetching book data from a specified endpoint,
+ * managing visibility of products based on user scroll actions, filtering products
+ * based on search queries, and handling initial and subsequent data loads.
+ *
+ * @component
+ *
+ * @example
+ * return (
+ *   <AmazonMarketplaceClone />
+ * )
+ *
+ * @remarks
+ * This component uses several state variables to manage the visibility of products,
+ * track loading states, and handle search functionality. It also uses the `useEffect`
+ * and `useCallback` hooks for handling side effects and memoizing functions respectively.
+ *
+ * @prop {string} process.env.NEXT_PUBLIC_AMOUNT_TO_LOAD_INITIALLY - The number of items to load initially.
+ * @prop {string} process.env.NEXT_PUBLIC_BOOK_ENDPOINT - The endpoint URL for fetching book data.
+ *
+ * @state {Product[]} visibleProducts - The list of products that are currently visible.
+ * @state {boolean} isFetching - State to indicate if data is currently being fetched.
+ * @state {boolean} hasMore - State to indicate if there are more products to be fetched.
+ * @state {boolean} initialLoad - Flag to track if the initial data load has been completed.
+ * @state {string} searchQuery - The current search query for filtering products.
+ * @state {Product[]} filteredProducts - The list of products filtered based on the search query.
+ *
+ * @function fetchData - Function to fetch data for a specific page.
+ * @function loadMoreData - Function to load more data when the end of the page is reached.
+ * @function handleScroll - Function to handle the scroll event of the page.
+ */
 const AmazonMarketplaceClone: React.FC = () => {
 
   const amount_to_load_initially = parseInt(process.env.NEXT_PUBLIC_AMOUNT_TO_LOAD_INITIALLY || "10", 10);
