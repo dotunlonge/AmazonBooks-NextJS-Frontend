@@ -12,8 +12,8 @@ interface Product {
 
 const AmazonMarketplaceClone: React.FC = () => {
 
-  const amount_to_load_initially = 16;
-  const bookEndpoint = `http://localhost:3000/api/books`;
+  const amount_to_load_initially = parseInt(process.env.NEXT_PUBLIC_AMOUNT_TO_LOAD_INITIALLY || "10", 10);
+  const bookEndpoint = process.env.NEXT_PUBLIC_BOOK_ENDPOINT;
 
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -62,7 +62,7 @@ const AmazonMarketplaceClone: React.FC = () => {
         setHasMore(false); // Set hasMore flag to false
       })
       .finally(() => setIsFetching(false)); // Set loading state to false after fetch completion
-  }, [bookEndpoint]);
+  }, [bookEndpoint, amount_to_load_initially]);
 
   /**
    * Function to load more data when scrolling to the bottom of the page.
@@ -72,7 +72,7 @@ const AmazonMarketplaceClone: React.FC = () => {
       const nextPage = (visibleProducts.length / amount_to_load_initially) + 1;
       fetchData(nextPage); // Load the next page of data
     }
-  }, [isFetching, hasMore, fetchData, visibleProducts]);
+  }, [isFetching, hasMore, fetchData, visibleProducts, amount_to_load_initially]);
 
   /**
    * Function to handle the scroll event and trigger loading more data.
