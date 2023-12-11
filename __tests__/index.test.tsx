@@ -1,10 +1,7 @@
 import React from "react";
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
-import AmazonMarketplaceClone from './index.tsx';
+import AmazonMarketplaceClone from '../src/pages';
 
-// Mock Environment Variables
-process.env.NEXT_PUBLIC_AMOUNT_TO_LOAD_INITIALLY = '10';
-process.env.NEXT_PUBLIC_BOOK_ENDPOINT = 'https://example.com/api/books';
 
 // Sample book data for mocking fetch responses.
 const books = [
@@ -227,10 +224,7 @@ const mockFetchResponse = (books, nextPage) => {
   });
 };
 
-
 beforeAll(() => {
-  // Setup the actual endpoint and mock global fetch before all tests.
-  process.env.NEXT_PUBLIC_BOOK_ENDPOINT = 'https://bookstore-server-20d9848cb6e4.herokuapp.com/api/books';
   global.fetch = jest.fn();
 });
 
