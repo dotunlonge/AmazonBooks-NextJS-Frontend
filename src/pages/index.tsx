@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import MainContainer from '../components/MainContainer';
 
+/**
+ * Defines the structure of a product object.
+ */
 interface Product {
   cover_image: string;
   title: string;
@@ -57,24 +60,23 @@ const AmazonMarketplaceClone: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   /**
-   * Filters and updates products based on the search query.
-   */
-  useEffect(() => {
-    if (!searchQuery) {
-      setFilteredProducts(visibleProducts);
-      return;
-    }
-
-    const filtered = visibleProducts.filter((product) =>
-      product.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredProducts(filtered);
-  }, [searchQuery, visibleProducts]);
+    * Filters visible products based on the search query and updates the filteredProducts state.
+    * Resets to all visible products when searchQuery is empty.
+    */
+   useEffect(() => {
+     setFilteredProducts(searchQuery
+       ? visibleProducts.filter(product => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
+       : visibleProducts
+     );
+   }, [searchQuery, visibleProducts]);
 
   /**
-   * Function to fetch data for the Amazon Marketplace.
-   * @param {number} page - The page number to fetch.
-   */
+    * Fetches a page of book data from the server.
+    * Updates the visibleProducts state by appending new books, ensuring no duplicates.
+    * Sets the hasMore state to indicate if further pages are available.
+    *
+    * @param {number} page - The page number to fetch.
+  */
   const fetchData = useCallback((page: number) => {
     setIsFetching(true); // Sets the loading state to true
     fetch(`${bookEndpoint}?page=${page}&size=${amount_to_load_initially}`)
@@ -97,14 +99,12 @@ const AmazonMarketplaceClone: React.FC = () => {
   }, [bookEndpoint, amount_to_load_initially]);
 
   /**
-   * Function to load more data when scrolling to the bottom of the page.
-   */
-  const loadMoreData = useCallback(() => {
-    if (!isFetching && hasMore) {
-      const nextPage = (visibleProducts.length / amount_to_load_initially) + 1;
-      fetchData(nextPage); // Load the next page of data
-    }
-  }, [isFetching, hasMore, fetchData, visibleProducts, amount_to_load_initially]);
+    * Triggers data fetching for the next page when the user scrolls to the bottom of the page.
+    */
+   const loadMoreData = useCallback(() => {
+     if (isFetching || !hasMore) return;
+     fetchData((visibleProducts.length / amount_to_load_initially) + 1);
+   }, [isFetching, hasMore, fetchData, visibleProducts.length, amount_to_load_initially]);
 
   /**
    * Function to handle the scroll event and trigger loading more data.

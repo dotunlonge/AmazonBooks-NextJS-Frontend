@@ -3,7 +3,6 @@ import styles from '../styles/home.module.scss';
 
 /**
  * Sidebar component displaying categories.
- *
  * @returns {JSX.Element} - React component representing the sidebar.
  */
 const Sidebar: React.FC = () => {

@@ -19,25 +19,10 @@ interface Product {
  * Props for the MainContainer component.
  */
 interface MainContainerProps {
-  /**
-   * Function to set the search query.
-   */
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-
-  /**
-   * Array of filtered products.
-   */
-  filteredProducts: Product[];
-
-  /**
-   * Indicates whether data is being fetched.
-   */
-  isFetching: boolean;
-
-  /**
-   * Indicates whether there are more products to load.
-   */
-  hasMore: boolean;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>; // Function to set the search query.
+  filteredProducts: Product[]; // Array of filtered products.
+  isFetching: boolean; // Indicates whether data is being fetched.
+  hasMore: boolean;  // Indicates whether there are more products to load.
 }
 
 /**
@@ -53,7 +38,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
   hasMore,
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="MainContainer">
       {/* Header Component */}
       <Header setSearchQuery={setSearchQuery} />
 

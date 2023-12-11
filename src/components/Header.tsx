@@ -6,10 +6,7 @@ import styles from '../styles/home.module.scss';
  * Props for the Header component.
  */
 interface HeaderProps {
-  /**
-   * Function to set the search query in the parent component.
-   */
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>; //Function to set the search query in the parent component.
 }
 
 /**

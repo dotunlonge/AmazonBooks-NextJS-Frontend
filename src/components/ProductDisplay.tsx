@@ -17,20 +17,9 @@ interface Product {
  * Props for the ProductDisplay component.
  */
 interface ProductDisplayProps {
-  /**
-   * Array of filtered products to display.
-   */
-  filteredProducts: Product[];
-
-  /**
-   * Indicates whether data is being fetched.
-   */
-  isFetching: boolean;
-
-  /**
-   * Indicates whether there are more products to load.
-   */
-  hasMore: boolean;
+  filteredProducts: Product[];  // Array of filtered products to display.
+  isFetching: boolean; // Indicates whether data is being fetched.
+  hasMore: boolean; // Indicates whether there are more products to load.
 }
 
 /**
@@ -65,7 +54,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({
           width={1500}
         />
       </div>
-      <div className={styles.products}>
+      <div className={styles.products} data-testid="filteredProducts">
         {/* Display each filtered product */}
         {filteredProducts.map((product, index) => (
           <div key={index}>
